@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body background-image=url(http://127.0.0.1:5000/images/vecteezy_merry-christmas-card-design-with-creative-typography-and_13304762.jpg)>
+    <div class="controls">
+        <button onclick="test_handler()">Test</button>
+        <button onclick="prev_handler()">Prev</button>
+        <button id="play-pause-btn" onclick="play_pause_handler()">Play</button>
+        <button onclick="next_handler()">Next</button>
+    </div>
+    <script>
+        function test_handler() {
+            fetch('http://127.0.0.1:5000/test');
+        }
+        function prev_handler() {
+            fetch('http://127.0.0.1:5000/cmds/prev');
+        }
+        function next_handler() {
+            fetch('http://127.0.0.1:5000/cmds/next');
+        }
+        function play_pause_handler() {
+            const play_pause_button = document.getElementById("play-pause-btn");
+            if (play_pause_button.innerText === "Play") {
+                play_pause_button.innerText = "Pause";
+                fetch('http://127.0.0.1:5000/cmds/play');
+            } else {
+                play_pause_button.innerText = "Play";
+                fetch('http://127.0.0.1:5000/cmds/pause');
+            }
+        }
+    </script>
+</body>
+</html>

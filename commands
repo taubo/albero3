@@ -1,0 +1,6 @@
+{"req": "list"}
+{"req": "current"}
+{"cmd": "play"}
+{"cmd": "pause"}
+{"cmd": "next"}
+{"cmd": "prev"}
