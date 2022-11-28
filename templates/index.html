@@ -1,16 +1,27 @@
 <!doctype html>
 <html>
 <head>
+
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+<style>
+.centered {
+    margin: auto;
+    width: 50%;
+    padding: 10px;
+}
+</style>
+
 </head>
 <body>
-    <div class="controls">
-        <button onclick="test_handler()">Test</button>
-        <button onclick="prev_handler()">Prev</button>
-        <button id="play-pause-btn" onclick="play_pause_handler()">Play</button>
-        <button onclick="next_handler()">Next</button>
+    <div class="d-grid gap-2 d-md-block centered">
+        <button onclick="test_handler()" class="btn btn-primary" type="button">Test</button>
+        <button onclick="prev_handler()" class="btn btn-primary" type="button">Prev</button>
+        <button id="play-pause-btn" onclick="play_pause_handler()" class="btn btn-primary" type="button">Pause</button>
+        <button onclick="next_handler()" class="btn btn-primary" type="button">Next</button>
+        <button onclick="random_handler()" class="btn btn-primary" type="button">Random</button>
     </div>
     <script>
         function test_handler() {
@@ -31,6 +42,9 @@
                 play_pause_button.innerText = "Play";
                 fetch('{{url}}/cmds/pause');
             }
+        }
+        function random_handler() {
+            fetch('{{ url }}/cmds/random');
         }
     </script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

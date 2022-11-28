@@ -13,10 +13,18 @@ def handle_message(message):
     json_msg = json.loads(message.decode())
     cmd = json_msg["cmd"]
     logging.info(f"Received command {cmd}")
+
+    # si potrebbe usare una mappa
     if (cmd == "prev"):
         leds_obj.previous()
     elif (cmd == "next"):
         leds_obj.next()
+    elif (cmd == "pause"):
+        leds_obj.pause()
+    elif (cmd == "play"):
+        leds_obj.play()
+    elif (cmd == "random"):
+        leds_obj.random()
 
 def accept_wrapper(sock):
     conn, addr = sock.accept()

@@ -20,13 +20,11 @@ import logging
 
 class LedAnimations():
     def __init__(self, pin, num_pixels):
-        # Works on Circuit Playground Express and Bluefruit.
-        # For other boards, change board.NEOPIXEL to match the pin to which the NeoPixels are attached.
+
         self.pixel_pin = pin
-        # Change to match the number of pixels you have attached to your board.
         self.num_pixels = num_pixels
         self.pixels = neopixel.NeoPixel(self.pixel_pin, self.num_pixels,
-                pixel_order=neopixel.RGB, brightness = 0.2, auto_write = False)
+                pixel_order=neopixel.RGB, brightness=0.2, auto_write=False)
         self.pixels.fill((0, 0, 0))
 
         sparkle = Sparkle(self.pixels, 0.05, (100, 100, 0), 10)
@@ -39,22 +37,25 @@ class LedAnimations():
         blink = Blink(self.pixels, 0.5, color.PURPLE)
         rainbow_chase = RainbowChase(self.pixels, 0.1, 3, 10)
 
-        self.anim_obj = AnimationSequence(
-                sparkle,
-                color_cycle,
-                chase,
-                comet,
-                pulse,
-                rainbow,
-                blink,
-                rainbow_chase,
-                advance_interval=15)
+        self.animation_array = [sparkle, color_cycle, chase, comet, pulse, rainbow, blink, rainbow_chase]
+        self.anim_obj = AnimationSequence(*self.animation_array, advance_interval=12)
 
     def next(self):
         self.anim_obj.next()
+        # logging.info(self.anim_obj.current_animation)
 
     def previous(self):
         self.anim_obj.previous()
+
+    def pause(self):
+        self.anim_obj.freeze()
+
+    def play(self):
+        self.anim_obj.resume()
+
+    def random(self):
+        self.anim_obj = AnimationSequence(*self.animation_array, advance_interval=12)
+        self.anim_obj.random()
 
     def animate(self):
         logging.debug("Calling animate()")
