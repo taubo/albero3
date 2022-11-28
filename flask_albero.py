@@ -35,8 +35,9 @@ def cmds(command):
 
 @app.route('/')
 def hello_world():
-    return render_template('index.html')
+    url_str='http://192.168.1.2:5000'
+    return render_template('index.html', url=url_str)
 
 if __name__ == '__main__':
     logging.getLogger().setLevel(logging.DEBUG)
-    app.run()
+    app.run(host="192.168.1.2")

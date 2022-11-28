@@ -3,12 +3,20 @@ import socket
 import selectors
 import json
 
+import led_animations as la
+import board
+
 sel = selectors.DefaultSelector()
+leds_obj = la.LedAnimations(board.D18, 50)
 
 def handle_message(message):
     json_msg = json.loads(message.decode())
     cmd = json_msg["cmd"]
     logging.info(f"Received command {cmd}")
+    if (cmd == "prev"):
+        leds_obj.previous()
+    elif (cmd == "next"):
+        leds_obj.next()
 
 def accept_wrapper(sock):
     conn, addr = sock.accept()
@@ -36,6 +44,7 @@ def service_connection(key, mask, message_handler):
     if mask & selectors.EVENT_WRITE:
         logging.info("Writing data")
 
+# put this inside a class and take the while True out
 def server():
     HOST = "127.0.0.1"
     PORT = 33333
@@ -51,6 +60,7 @@ def server():
 
     # conn, addr = s.accept()
     while True:
+        leds_obj.animate()
         events = sel.select(timeout=0)
         for key, mask in events:
             # no data means that connection needs to be put in place
