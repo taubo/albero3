@@ -19,13 +19,13 @@
     <div class="d-grid gap-2 d-md-block centered">
         <button onclick="test_handler()" class="btn btn-primary" type="button">Test</button>
         <button onclick="prev_handler()" class="btn btn-primary" type="button">Prev</button>
-        <button id="play-pause-btn" onclick="play_pause_handler()" class="btn btn-primary" type="button">Pause</button>
+        <button id="play-pause-btn" onclick="play_pause_handler()" class="btn btn-primary" type="button">{{ animation_state }}</button>
         <button onclick="next_handler()" class="btn btn-primary" type="button">Next</button>
         <button onclick="random_handler()" class="btn btn-primary" type="button">Random</button>
     </div>
     <script>
         function test_handler() {
-            fetch('{{ url }}/test');
+            fetch('{{ url }}/state');
         }
         function prev_handler() {
             fetch('{{ url }}/cmds/prev');

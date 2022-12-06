@@ -20,41 +20,47 @@ import logging
 
 class LedAnimations():
     def __init__(self, pin, num_pixels):
+        self.animation_state = "Play"
 
         self.pixel_pin = pin
         self.num_pixels = num_pixels
         self.pixels = neopixel.NeoPixel(self.pixel_pin, self.num_pixels,
-                pixel_order=neopixel.RGB, brightness=0.2, auto_write=False)
+                pixel_order=neopixel.RGB, brightness=0.1, auto_write=False)
         self.pixels.fill((0, 0, 0))
 
-        sparkle = Sparkle(self.pixels, 0.05, (100, 100, 0), 10)
+        sparkle = Sparkle(self.pixels, 0.04, (100, 100, 0), 10)
         color_cycle = ColorCycle(self.pixels, 0.5, colors=[(100, 0, 0), (0, 100, 0), (0, 0, 100)])
-        chase = Chase(self.pixels, 0.1, color=(0, 100, 0), size=3, spacing=10)
-        comet = Comet(self.pixels, 0.1, (50, 50, 0))
-        pulse = Pulse(self.pixels, 0.1, (0, 50, 0))
+        chase = Chase(self.pixels, 0.04, color=(0, 100, 0), size=3, spacing=10)
+        comet = Comet(self.pixels, 0.04, (50, 50, 0))
+        pulse = Pulse(self.pixels, 0.04, (0, 50, 0))
         # sparkle = SparklePulse(self.pixels, 0.05, (100, 100, 100))
-        rainbow = Rainbow(self.pixels, 0.1)
+        rainbow = Rainbow(self.pixels, 0.04)
         blink = Blink(self.pixels, 0.5, color.PURPLE)
         rainbow_chase = RainbowChase(self.pixels, 0.1, 3, 10)
 
         self.animation_array = [sparkle, color_cycle, chase, comet, pulse, rainbow, blink, rainbow_chase]
-        self.anim_obj = AnimationSequence(*self.animation_array, advance_interval=12)
+        self.anim_obj = AnimationSequence(*self.animation_array, advance_interval=20)
 
     def next(self):
         self.anim_obj.next()
+        self.anim_obj._advance_interval = None
         # logging.info(self.anim_obj.current_animation)
 
     def previous(self):
         self.anim_obj.previous()
+        self.anim_obj._advance_interval = None
+        # logging.info(self.anim_obj.current_animation)
 
     def pause(self):
         self.anim_obj.freeze()
+        self.animation_state = "Pause"
 
     def play(self):
         self.anim_obj.resume()
+        self.animation_state = "Play"
 
     def random(self):
-        self.anim_obj = AnimationSequence(*self.animation_array, advance_interval=12)
+        self.anim_obj = AnimationSequence(*self.animation_array, advance_interval=20)
         self.anim_obj.random()
 
     def animate(self):

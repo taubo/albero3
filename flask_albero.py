@@ -15,11 +15,17 @@ def send(command):
     json_cmd = {"cmd": command}
     json_cmd = json.dumps(json_cmd)
 
+    response = None
+
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         logging.info(f"Connecting to {(HOST, PORT)}")
         s.connect((HOST, PORT))
         s.sendall(json_cmd.encode())
+        if command == 'state':
+            response = s.recv(20)
+            logging.debug(f"Receiving: {response}")
         s.close()
+    return response
 
 @app.route('/test')
 def test():
@@ -36,7 +42,20 @@ def cmds(command):
 @app.route('/')
 def hello_world():
     url_str='http://192.168.1.2:5000'
-    return render_template('index.html', url=url_str)
+    response = send('state')
+    logging.info(f"Response: {response}")
+    if response is None:
+        state = "Pause"
+    else:
+        json_msg = json.loads(response.decode())
+        rsp = json_msg["rsp"]
+        logging.info(f"Received response {rsp}")
+        if rsp == "Pause":
+            state = "Play"
+        elif rsp == "Play":
+            state = "Pause"
+
+    return render_template('index.html', url=url_str, animation_state=state)
 
 if __name__ == '__main__':
     logging.getLogger().setLevel(logging.DEBUG)
