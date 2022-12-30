@@ -5,6 +5,7 @@ import logging
 
 import socket
 import json
+import sys
 
 app = Flask(__name__)
 
@@ -39,6 +40,10 @@ def cmds(command):
 
     return jsonify(success=True)
 
+@app.route('/no_socket')
+def no_socket():
+    return render_template('index.html', url="http://127.0.0.1:5000", animation_state="Pause")
+
 @app.route('/')
 def hello_world():
     url_str='http://192.168.1.2:5000'
@@ -59,4 +64,8 @@ def hello_world():
 
 if __name__ == '__main__':
     logging.getLogger().setLevel(logging.DEBUG)
-    app.run(host="192.168.1.2")
+    if len(sys.argv) == 2:
+        chosen_host = sys.argv[1]
+    else:
+        chosen_host = "192.168.1.2"
+    app.run(host=chosen_host)

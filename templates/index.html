@@ -12,12 +12,21 @@
     width: 50%;
     padding: 10px;
 }
+
+.button {
+    background-color: rgb(0, 200, 100);
+    border: none;
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+}
 </style>
 
 </head>
 <body>
     <div class="d-grid gap-2 d-md-block centered">
-        <button onclick="test_handler()" class="btn btn-primary" type="button">Test</button>
+        <!-- <button onclick="test_handler()" class="button" type="button">Test style</button> -->
+        <!-- <button onclick="test_handler()" class="btn btn-primary" type="button">Test</button> -->
         <button onclick="prev_handler()" class="btn btn-primary" type="button">Prev</button>
         <button id="play-pause-btn" onclick="play_pause_handler()" class="btn btn-primary" type="button">{{ animation_state }}</button>
         <button onclick="next_handler()" class="btn btn-primary" type="button">Next</button>
