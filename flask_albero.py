@@ -56,11 +56,13 @@ def hello_world():
         rsp = json_msg["rsp"]
         logging.info(f"Received response {rsp}")
         if rsp == "Pause":
-            state = "Play"
+            play_button_display = "inline"
+            pause_button_display = "none"
         elif rsp == "Play":
-            state = "Pause"
+            play_button_display = "none"
+            pause_button_display = "inline"
 
-    return render_template('index.html', url=url_str, animation_state=state)
+    return render_template('index.html', url=url_str, play_btn_display=play_button_display, pause_btn_display=pause_button_display)
 
 if __name__ == '__main__':
     logging.getLogger().setLevel(logging.DEBUG)
