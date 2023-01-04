@@ -35,12 +35,12 @@ class LedAnimations():
         self.pixel_pin = pin
         self.num_pixels = num_pixels
         self.pixels = neopixel.NeoPixel(self.pixel_pin, self.num_pixels,
-                pixel_order=neopixel.GRB, brightness=0.2, auto_write=False)
+                pixel_order=neopixel.GRB, brightness=0.15, auto_write=False)
         self.pixels.fill((0, 0, 0))
 
         sparkle1 = Sparkle(self.pixels, 0.04, (200, 200, 0), 10)
         sparkle2 = Sparkle(self.pixels, 0.04, (0, 200, 200), 10)
-        sparkle3 = Sparkle(self.pixels, 0.04, col.GOLD, 70)
+        sparkle3 = Sparkle(self.pixels, 0.04, col.GOLD, 20)
 
         color_cycle1 = ColorCycle(self.pixels, 1.5, colors=[(100, 0, 0), (0, 100, 0), (0, 0, 100)])
         color_cycle2 = ColorCycle(self.pixels, 1.5, colors=[col.TEAL, col.CYAN])
@@ -57,8 +57,8 @@ class LedAnimations():
 
         upper = PixelSubset(self.pixels, 75, 150)
         lower = PixelSubset(self.pixels, 0, 75)
-        comet5 = Comet(lower, 0.04, col.RED, tail_length = 50)
-        comet6 = Comet(upper, 0.04, col.RED, reverse = True, tail_length = 50)
+        comet5 = Comet(lower, 0.04, col.RED, tail_length = 30)
+        comet6 = Comet(upper, 0.04, col.RED, reverse = True, tail_length = 30)
         comet_crashing = AnimationGroup(comet5, comet6)
 
         pulse1 = Pulse(self.pixels, 0.01, (100, 150, 20))
@@ -72,6 +72,7 @@ class LedAnimations():
         rainbow_chase1 = RainbowChase(self.pixels, 0.1, 3, 10)
         rainbow_chase2 = RainbowChase(self.pixels, 0.1, 10, 3)
 
+        # questo puo' essere fatto usando PixelMap con l'animazione Rainbow
         supermassive_rainbow1 = supermassive_rainbow.SupermassiveRainbow(self.pixels, 0.1)
 
         sine1 = function.Sine(self.pixels, 0.04, col.GOLD)

@@ -2,6 +2,10 @@ from adafruit_led_animation.animation import Animation
 from time import monotonic_ns
 import math
 
+def sinize(val, t_s, f, phase):
+    new_val = (val * (1 + math.sin(2 * math.pi * f * t_s + phase))) // 2
+    return new_val
+
 class Sine(Animation):
     def __init__(self, pixel_object, speed, color, frequency_hz=1):
         super().__init__(pixel_object, speed, color, name=None)
