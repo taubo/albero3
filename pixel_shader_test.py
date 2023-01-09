@@ -43,12 +43,11 @@ def pixel_shader_sine_example(context, now_s, pixel_index):
                 int(function.sinize(base_color[2], now_s, frequency_hz / 5, pixel_index))
                 )
 
-    # print(f"{color_new=} -- {pixel_index=}")
     return color_new
 
 base_color = (200, 200, 200)
 # anim = pixel_shader.PixelShader(pixels, 0.04, pixel_shader_example_function, None)
-anim = pixel_shader.PixelShader(pixels, 0.04, pixel_shader_sine_example, base_color)
+anim = pixel_shader.PixelShader(pixels, 0.04, pixel_shader.old_england_shader, base_color)
 
 pixels.fill((0, 0, 0))
 pixels.show()

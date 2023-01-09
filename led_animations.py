@@ -7,6 +7,7 @@ sys.path.append('/home/pi/albero3/animations')
 
 import supermassive_rainbow
 import function
+import pixel_shader
 
 from adafruit_led_animation.animation.blink import Blink
 from adafruit_led_animation.animation.sparkle import Sparkle
@@ -38,17 +39,22 @@ class LedAnimations():
                 pixel_order=neopixel.GRB, brightness=0.15, auto_write=False)
         self.pixels.fill((0, 0, 0))
 
+        self.animation_map = {}
+
         sparkle1 = Sparkle(self.pixels, 0.04, (200, 200, 0), 10)
         sparkle2 = Sparkle(self.pixels, 0.04, (0, 200, 200), 10)
         sparkle3 = Sparkle(self.pixels, 0.04, col.GOLD, 20)
+        # self.animation_map["Sparkle"] = [sparkle1, sparkle2, sparkle3]
 
         color_cycle1 = ColorCycle(self.pixels, 1.5, colors=[(100, 0, 0), (0, 100, 0), (0, 0, 100)])
         color_cycle2 = ColorCycle(self.pixels, 1.5, colors=[col.TEAL, col.CYAN])
         color_cycle3 = ColorCycle(self.pixels, 1.5, colors=[col.MAGENTA, col.PURPLE])
         color_cycle4 = ColorCycle(self.pixels, 1.5, colors=[col.GOLD, col.ORANGE, col.AMBER])
+        # self.animation_map["Ciclo Coloreo"] = [color_cycle1, color_cycle2, color_cycle3, color_cycle4]
 
         chase1 = Chase(self.pixels, 0.04, color=(0, 200, 0), size=5, spacing=10)
         chase2 = Chase(self.pixels, 0.04, color=(200, 0, 0), size=5, spacing=30)
+        # self.animation_map["Inseguimento!"] = [chase1, chase2]
 
         comet1 = Comet(self.pixels, 0.04, (50, 50, 0))
         comet2 = Comet(self.pixels, 0.04, (150, 80, 100), reverse = True)
@@ -82,6 +88,8 @@ class LedAnimations():
         sine5 = function.Sine(self.pixels, 0.04, col.ORANGE)
         sine6 = function.Sine(self.pixels, 0.04, col.PINK)
 
+        old_england_pub = pixel_shader.PixelShader(self.pixels, 0.04, pixel_shader.old_england_shader, (200, 200, 200))
+
         self.animation_array = [
                 sparkle1, sparkle2, sparkle3,
                 color_cycle1, color_cycle2, color_cycle3, color_cycle4,
@@ -93,7 +101,8 @@ class LedAnimations():
                 blink,
                 rainbow_chase1, rainbow_chase2,
                 supermassive_rainbow1,
-                sine1, sine2, sine3, sine4, sine5, sine6
+                sine1, sine2, sine3, sine4, sine5, sine6,
+                old_england_pub
         ]
         self.anim_obj = AnimationSequence(*self.animation_array, random_order=True, advance_interval=20)
 
